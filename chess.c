@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <windows.h>
 
 
 
@@ -61,8 +62,12 @@ int main(){
     
     
 //GAMES RULES FOR CHESS 
+    HANDLE hConsole = GetStdHandle(STD_OUPUT_HANDLE);
+    
     printf("\t\t\t\t\tTHE GAME RULES ARE AS FOLLOWS\n");
     printf("The goal is to checkmate the opponent's king which means to capture the king in such a way that there is no possible escape\n\n");
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
     printf("\t\t\t\t\t\tPIECE MOVEMENT\n");
     printf("Pawn moves 1 square forward but captures diagonally. On it's first move a pawn can move 2 squares forward\n");
     printf("King moves 1 square in any direction\n");
@@ -70,17 +75,25 @@ int main(){
     printf("Bishops move diagonally\n");
     printf("Rooks move horizontally and vertically\n");
     printf("Queen moves diagonally as well as horizontal and vertical\n\n");
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
     printf("\t\t\t\t\t\tSPECIAL MOVES\n");
     printf("En passant: A pawn capturing option when the opponent's pawn moves 2 squares forward and lands beside you pawn\n");
     printf("Castling: A defensive move which allows the King and a Rook to move under certain conditions\n");
     printf("Promotion: When a pawn reaches the 8th Rank it can be promoted to any other piece(except a king)\n\n");
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
     printf("\t\t\t\t\t\tOTHER RULES\n");
     printf("Check: When the King is in threat\n");
     printf("Checkmate: When the King has no legal move to escape capture. In this condition the game ends with a win\n\n");
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
     printf("\t\t\t\t\t\tDRAW CONDITIONS\n");
     printf("Stalemate: When the King has no legal move and is not in check\n");
     printf("Deadboard condition: A condition where neither player is able to checkmate the opponent by a legal sequence of moves\n");
     printf("50 move rule: When during the last 50 moves, no pawn has been moved and no capture is made\n\n");
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     
 //COMMAND TO START THE GAME
    
@@ -197,7 +210,7 @@ void display_initial_board(char initial_board[8][8]){
     for(int i = 0; i < 8; i++){
         printf("%d", 8 - i);
         for(int j = 0; j < 8; j++){
-            printf("\t\t%c", initial_board[i][j]);
+            printf("\t\t|%c|", initial_board[i][j]);
         }
         printf("\n");
     }
