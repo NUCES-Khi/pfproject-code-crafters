@@ -8,6 +8,7 @@
 
 void initial_chess_board(char initial_board[8][8]);
 void display_initial_board(char initial_board[8][8]);
+void display_rules();
 void switch_player(char *curr_player);
 int has_white_space(const char *str);
 bool Valid_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
@@ -16,7 +17,6 @@ bool Valid_Bishop_Move(int curr_row, char curr_col, int targ_row, char targ_col,
 bool Valid_Rook_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 bool Valid_Queen_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 bool Valid_King_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
-bool display_rules();
 
 
 
