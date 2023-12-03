@@ -16,15 +16,17 @@ bool Valid_Bishop_Move(int curr_row, char curr_col, int targ_row, char targ_col,
 bool Valid_Rook_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 bool Valid_Queen_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 bool Valid_King_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
-
+bool display_rules();
 
 
 
 int main(){
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     char initial_board[8][8];
     char player1[15], player2[15], color[10]; 
     char curr_player = 'W';
+    char piece, command;
+    int curr_row, targ_row;
+    char curr_col, targ_col;
 
 
     do {
@@ -62,111 +64,76 @@ int main(){
     
     
     
-//GAMES RULES FOR CHESS 
-    printf("\t\t\t\t\tTHE GAME RULES ARE AS FOLLOWS\n");
-    printf("The goal is to checkmate the opponent's king which means to capture the king in such a way that there is no possible escape\n\n");
-    
-    
-    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
-    printf("\t\t\t\t\t\t\tPIECE MOVEMENT\n");
-    printf("Pawn moves 1 square forward but captures diagonally. On it's first move a pawn can move 2 squares forward\n");
-    printf("King moves 1 square in any direction\n");
-    printf("Knights move in L shape. 2 squares in one direction and then 1 square perpendicular\n");
-    printf("Bishops move diagonally\n");
-    printf("Rooks move horizontally and vertically\n");
-    printf("Queen moves diagonally as well as horizontal and vertical\n\n");
-    
-
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
-    printf("\t\t\t\t\t\tSPECIAL MOVES\n");
-    printf("En passant: A pawn capturing option when the opponent's pawn moves 2 squares forward and lands beside you pawn\n");
-    printf("Castling: A defensive move which allows the King and a Rook to move under certain conditions\n");
-    printf("Promotion: When a pawn reaches the 8th Rank it can be promoted to any other piece(except a king)\n\n");
-    
-
-    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-    printf("\t\t\t\t\t\tOTHER RULES\n");
-    printf("Check: When the King is in threat\n");
-    printf("Checkmate: When the King has no legal move to escape capture. In this condition the game ends with a win\n\n");
-    
-
-    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
-    printf("\t\t\t\t\t\tDRAW CONDITIONS\n");
-    printf("Stalemate: When the King has no legal move and is not in check\n");
-    printf("Deadboard condition: A condition where neither player is able to checkmate the opponent by a legal sequence of moves\n");
-    printf("50 move rule: When during the last 50 moves, no pawn has been moved and no capture is made\n\n");
-    
-    
-    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
     
-//COMMAND TO START THE GAME
-   
-    
-    char piece, command;
-    int curr_row, targ_row;
-    char curr_col, targ_col;
+    //bool Rules = true;
+    //while(1){
+        //if(Rules){
+            display_rules();
+            //Rules = false;
+        //}
+    //}
     
     while(1){ 
-    scanf(" %c", &command);
+        scanf(" %c", &command);
     
-    switch(command){
-        case 's':
-        initial_chess_board(initial_board);
-        display_initial_board(initial_board);
-        break;
+        switch(command){
+            case 's':
+            initial_chess_board(initial_board);
+            display_initial_board(initial_board);
+            break;
         
-        case 'e':
-        printf("Exiting the game");
-        break;
-    }
+            case 'e':
+            printf("Exiting the game");
+            break;
+        }
     
-    while(1){
-        switch_player(&curr_player);
-        printf("%s's turn(%s): ", (curr_player == 'W') ? player1 : player2, (curr_player == 'W') ? "White" : "Black");
+        while(1){
+            switch_player(&curr_player);
+            printf("%s's turn(%s): ", (curr_player == 'W') ? player1 : player2, (curr_player == 'W') ? "White" : "Black");
 
     
             scanf(" %c", &piece);
     
-        switch(piece){
-            case 'p':
+                switch(piece){
+                case 'p':
                 if(Valid_Pawn_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
-            }
-            break;
+                }
+                break;
         
-            case 'n':
+                case 'n':
                 if(Valid_Knight_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
-            }
-            break;
+                }
+                break;
         
-            case 'b':
+                case 'b':
                 if(Valid_Bishop_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
                 }
-            break;
+                break;
         
-            case 'r':
+                case 'r':
                 if(Valid_Rook_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
-            }
-            break;
+                }
+                break;
         
-            case 'q':
+                case 'q':
                 if(Valid_Queen_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
-            }
-            break;
+                }
+                break;
         
-            case 'k':
+                case 'k':
                 if(Valid_King_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                 display_initial_board(initial_board);
-            }
-            break;
+                }
+                break;
         
-            default:
-            printf("Invalid input");
+                default:
+                printf("Invalid input");
         
             }
         }
@@ -237,6 +204,47 @@ int has_white_space(const char *str) {
         str++;
     }
     return 0; 
+}
+
+bool display_rules(){
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    printf("\t\t\t\t\tTHE GAME RULES ARE AS FOLLOWS\n");
+    printf("The goal is to checkmate the opponent's king which means to capture the king in such a way that there is no possible escape\n\n");
+    
+    
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+    printf("\t\t\t\t\t\t\tPIECE MOVEMENT\n");
+    printf("Pawn moves 1 square forward but captures diagonally. On it's first move a pawn can move 2 squares forward\n");
+    printf("King moves 1 square in any direction\n");
+    printf("Knights move in L shape. 2 squares in one direction and then 1 square perpendicular\n");
+    printf("Bishops move diagonally\n");
+    printf("Rooks move horizontally and vertically\n");
+    printf("Queen moves diagonally as well as horizontal and vertical\n\n");
+    
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+    printf("\t\t\t\t\t\tSPECIAL MOVES\n");
+    printf("En passant: A pawn capturing option when the opponent's pawn moves 2 squares forward and lands beside you pawn\n");
+    printf("Castling: A defensive move which allows the King and a Rook to move under certain conditions\n");
+    printf("Promotion: When a pawn reaches the 8th Rank it can be promoted to any other piece(except a king)\n\n");
+    
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
+    printf("\t\t\t\t\t\tOTHER RULES\n");
+    printf("Check: When the King is in threat\n");
+    printf("Checkmate: When the King has no legal move to escape capture. In this condition the game ends with a win\n\n");
+    
+
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE);
+    printf("\t\t\t\t\t\tDRAW CONDITIONS\n");
+    printf("Stalemate: When the King has no legal move and is not in check\n");
+    printf("Deadboard condition: A condition where neither player is able to checkmate the opponent by a legal sequence of moves\n");
+    printf("50 move rule: When during the last 50 moves, no pawn has been moved and no capture is made\n\n");
+    
+    
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
 }
 
 //THIS IS THE MOVE LOGIC FOR THE PAWN
@@ -424,7 +432,7 @@ bool Valid_Queen_Move(int curr_row, char curr_col, int targ_row, char targ_col, 
     if (curr_row == targ_row || curr_col == targ_col || row_diff == col_diff || row_diff == -col_diff) {
          initial_board[curr_row - 1][curr_col - 'a'] = '.';
         initial_board[targ_row - 1][targ_col - 'a'] = 'q';
-        printf("Valif move for the queen\n");
+        printf("Valid move for the queen\n");
         return true;
     } else {
         printf("Invalid move for the queen\n");
