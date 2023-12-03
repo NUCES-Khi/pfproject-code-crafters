@@ -62,17 +62,7 @@ int main(){
         }
     } while (strcmp(color, "black") != 0 && strcmp(color, "white") != 0);
     
-    
-    
-
-    
-    //bool Rules = true;
-    //while(1){
-        //if(Rules){
-            display_rules();
-            //Rules = false;
-        //}
-    //}
+    display_rules();
     
     while(1){ 
         scanf(" %c", &command);
