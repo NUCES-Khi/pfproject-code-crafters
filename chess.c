@@ -181,22 +181,8 @@ void display_initial_board(char initial_board[8][8]){
      printf("\t\x1b[1;32m    a    b    c    d    e    f    g    h\x1b[0m\n");
 }
 
-void switch_player(char *curr_player){
-    *curr_player = (*curr_player == 'W') ? 'B' : 'W';
-}
-
-//THIS IS USED TO CHECK WHITESPACES WHILE ENTERING THE NAMES
-int has_white_space(const char *str) {
-    while (*str) {
-        if (isspace((unsigned char)*str)) {
-            return 1; 
-        }
-        str++;
-    }
-    return 0; 
-}
-
-bool display_rules(){
+//THIS FUNCTION DISPLAYS ALL THE RULES OF CHESS
+void display_rules(){
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     printf("\t\t\t\t\tTHE GAME RULES ARE AS FOLLOWS\n");
@@ -236,6 +222,24 @@ bool display_rules(){
     SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
 }
+
+//THIS FUNCTION SWITCHES PLAYERS AFTER EVERY TURN
+void switch_player(char *curr_player){
+    *curr_player = (*curr_player == 'W') ? 'B' : 'W';
+}
+
+//THIS IS USED TO CHECK WHITESPACES WHILE ENTERING THE NAMES
+int has_white_space(const char *str) {
+    while (*str) {
+        if (isspace((unsigned char)*str)) {
+            return 1; 
+        }
+        str++;
+    }
+    return 0; 
+}
+
+
 
 //THIS IS THE MOVE LOGIC FOR THE PAWN
 bool Valid_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]){
