@@ -36,6 +36,7 @@ void handleCheckCondition(char curr_player, char initial_board[8][8], int* king_
 
 
 int main(){
+    //initializing variables
     char initial_board[8][8];
     char player1[15], player2[15], color; 
     char curr_player = 'B';
@@ -44,7 +45,7 @@ int main(){
     char curr_col, targ_col;
     bool is_castling = false;
 
-
+    //do while loop asking for names continuously until entered in a correct format
     do {
         printf("Enter Player 1 name: ");
         fgets(player1, sizeof(player1), stdin);
@@ -63,6 +64,7 @@ int main(){
         }
     } while (has_white_space(player2) || strcmp(player1, player2) == 0);
 
+    //do while loop asking for character input continuously until meets the requirements
     do {
         printf("%s, enter the color with which you want to play (B for black, and W for white): ", player1);
         scanf("%c", &color);
@@ -77,18 +79,22 @@ int main(){
             printf("%s there are only two colors in chess\n", player1);
         }
     } while ((color != 'B')  && (color != 'W'));
-    
+
+    //calling displaying rules function
     display_rules();
-    
+
+    //game loop
     while(1){ 
         scanf(" %c", &command);
-    
+
+        //switch case for starting or exiting the game
         switch(command){
-            case 's':
+            case 's': //starting the game
             initial_chess_board(initial_board);
             display_initial_board(initial_board);
 
             while(1){
+                //switch player function
                 switch_player(&curr_player);
                 if(color == 'B'){
                     printf("%s's turn(%s): ", (curr_player == 'B') ? player1 : player2, (curr_player == 'W') ? "White" : "Black");
@@ -101,13 +107,13 @@ int main(){
                 scanf(" %c", &piece);
     
                 switch(piece){
-                    case 'P':
+                    case 'P': //calling white pawn function when entering P
                     if(Valid_White_Pawn_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
                     break;
 
-                    case 'p':
+                    case 'p': //calling black pawn function when entering p
                     if(Valid_Black_Pawn_Move( curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -122,6 +128,7 @@ int main(){
 
                     case 'B':
                     case 'b':
+                    //calling bishop function when entering B or b
                     if(Valid_Bishop_Move(curr_player, curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -129,6 +136,7 @@ int main(){
 
                     case 'R':
                     case 'r':
+                    //calling rook function when entering R or r
                     if(Valid_Rook_Move(curr_player, curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -136,6 +144,7 @@ int main(){
 
                     case 'Q':
                     case 'q':
+                    //calling queen function when entering Q or q
                     if(Valid_Queen_Move(curr_player, curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -143,19 +152,21 @@ int main(){
 
                     case 'K':
                     case 'k':
+                    //calling king function when entering K or k
                     if(Valid_King_Move(curr_player, curr_row, curr_col, targ_row, targ_col, initial_board, is_castling)){
                         display_initial_board(initial_board);
                     }
                     break;
         
                     default:
+                    //handling invalid input
                     printf("Invalid input");
         
                 }
             }
             break;
         
-            case 'e':
+            case 'e': //ending the game
             printf("Exiting the game");
             break;
         }
@@ -193,7 +204,7 @@ void initial_chess_board(char initial_board[8][8]) {
         {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}
     };
     for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
+        for(int j = 0; j < 8; j++){//nested for loop for storing the chess board in a 2d array
             initial_board[i][j] = initial_data[i][j];
         }
     }
@@ -275,12 +286,10 @@ int has_white_space(const char *str) {
 
 //THIS IS THE MOVE LOGIC FOR THE WHITE PAWN
 bool Valid_White_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]){
-    
-    
-    
     printf("Enter current Pawn position:");
     scanf(" %c%d", &curr_col, &curr_row);
     if(curr_col < 'a'  ||  curr_col > 'h'  ||  curr_row < 1  || curr_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
@@ -288,6 +297,7 @@ bool Valid_White_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
     printf("Enter final Pawn position:");
     scanf(" %c%d", &targ_col, &targ_row);
     if(targ_col < 'a'  ||  targ_col > 'h'  ||  targ_row < 1  || targ_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -332,16 +342,16 @@ bool Valid_White_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
 bool Valid_Black_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]) {
     printf("Enter current Pawn position:");
     scanf(" %c%d", &curr_col, &curr_row);
-
     if (curr_col < 'a' || curr_col > 'h' || curr_row < 1 || curr_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
 
     printf("Enter final Pawn position:");
     scanf(" %c%d", &targ_col, &targ_row);
-
     if (targ_col < 'a' || targ_col > 'h' || targ_row < 1 || targ_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -385,19 +395,18 @@ bool Valid_Black_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
 
 //THIS IS THE MOVE LOGIC FOR THE ROOK
 bool Valid_Rook_Move (char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]) {
-    
     printf("Enter current Rook position:");
     scanf(" %c%d", &curr_col, &curr_row);
-    
     if (curr_col < 'a' || curr_col > 'h' || curr_row < 1 || curr_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
     
     printf("Enter final Rook position:");
     scanf(" %c%d", &targ_col, &targ_row);
-    
     if (targ_col < 'a' || targ_col > 'h' || targ_row < 1 || targ_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -409,17 +418,17 @@ bool Valid_Rook_Move (char curr_player, int curr_row, char curr_col, int targ_ro
 
     int step;
 
-    if (curr_row == targ_row) { // Move along the same row
-        // Determine the direction of movement
+    if (curr_row == targ_row) { //Move along the same row
+        //Determine the direction of movement
         if (curr_col < targ_col) {
-            step = 1; // Move to the right
+            step = 1; //Move to the right
         } else {
-            step = -1; // Move to the left
+            step = -1; //Move to the left
         }
 
         int col = curr_col + step;
 
-        // Check for pieces in the way
+        //Check for pieces in the way
         while (col != targ_col) {
             if (initial_board[curr_row - 1][col - 'a'] != '.') {
                 printf("Invalid move due to presence of similar color piece\n");
@@ -435,17 +444,17 @@ bool Valid_Rook_Move (char curr_player, int curr_row, char curr_col, int targ_ro
             initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'r' : 'R';//tenary condition for replacing '.'
             return true;
         }
-    } else if (curr_col == targ_col) { // Move along the same column
-        // Determine the direction of movement
+    } else if (curr_col == targ_col) { //Move along the same column
+        //Determine the direction of movement
         if (curr_row < targ_row) {
-            step = 1; // Move downwards
+            step = 1; //Move downwards
         } else {
-            step = -1; // Move upwards
+            step = -1; //Move upwards
         }
 
         int row = curr_row + step;
 
-        // Check for pieces in the way
+        //Check for pieces in the way
         while (row != targ_row) {
             if (initial_board[row - 1][curr_col - 'a'] != '.') {
                 printf("Invalid move due to presence of similar color piece\n");
@@ -477,19 +486,18 @@ bool Valid_Rook_Move (char curr_player, int curr_row, char curr_col, int targ_ro
 
 //THIS IS THE MOVE LOGIC FOR THE BISHOP
 bool Valid_Bishop_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]) {
-
     printf("Enter current Bishop position:");
     scanf(" %c%d", &curr_col, &curr_row);
-
     if (curr_col < 'a' || curr_col > 'h' || curr_row < 1 || curr_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
 
     printf("Enter final Bishop position:");
     scanf(" %c%d", &targ_col, &targ_row);
-
     if (targ_col < 'a' || targ_col > 'h' || targ_row < 1 || targ_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -499,14 +507,14 @@ bool Valid_Bishop_Move(char curr_player, int curr_row, char curr_col, int targ_r
         return false;
     }
 
-    // Calculate row and column differences for diagonal movement
+    //Calculate row and column differences for diagonal movement
     int row_diff = targ_row - curr_row;
     int col_diff = targ_col - curr_col;
     int row_step, col_step;
 
-    // Check if the move follows the diagonal pattern
+    //Check if the move follows the diagonal pattern
     if (row_diff == col_diff || row_diff == -col_diff) {
-        // Check for pieces in the way
+        //Check for pieces in the way
         if (row_diff > 0) {
             row_step = 1;
         } else {
@@ -531,14 +539,14 @@ bool Valid_Bishop_Move(char curr_player, int curr_row, char curr_col, int targ_r
             col += col_step;
         }
 
-        // Capturing move for bishop
+        //Capturing move for bishop
         if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
             printf("Capturing move for the Bishop\n");
             initial_board[curr_row - 1][curr_col - 'a'] = '.';
             initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'b' : 'B';
             return true;
         }else {
-            // If it's not a capturing move, just move to the target position
+            //If it's not a capturing move, just move to the target position
             initial_board[curr_row - 1][curr_col - 'a'] = '.';
             initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'b' : 'B';
             printf("Valid move for the Bishop\n");
@@ -554,10 +562,10 @@ bool Valid_Bishop_Move(char curr_player, int curr_row, char curr_col, int targ_r
 
 //THIS IS THE MOVE LOGIC FOR THE KNIGHT
 bool Valid_Knight_Move (char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]){
-    
     printf("Enter current Knight position:");
     scanf(" %c%d", &curr_col, &curr_row);
     if(curr_col < 'a'  ||  curr_col > 'h'  ||  curr_row < 1  || curr_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
@@ -565,6 +573,7 @@ bool Valid_Knight_Move (char curr_player, int curr_row, char curr_col, int targ_
     printf("Enter final Knight position:");
     scanf(" %c%d", &targ_col, &targ_row);
     if(targ_col < 'a'  ||  targ_col > 'h'  ||  targ_row < 1  || targ_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -580,19 +589,19 @@ bool Valid_Knight_Move (char curr_player, int curr_row, char curr_col, int targ_
     if ((row_diff == 1 && col_diff == 2) || (row_diff == -1 && col_diff == 2) ||
     (row_diff == 2 && col_diff == 1) || (row_diff == -2 && col_diff == 1)) {
         if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
-        // Capturing move
+        //Capturing move
         printf("Capturing move for the Knight\n");
-        initial_board[curr_row - 1][curr_col - 'a'] = '.';  // Empty the current position
+        initial_board[curr_row - 1][curr_col - 'a'] = '.';  //Empty the current position
         initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'n' : 'N';  // Place the knight in the target position
          } else {
-        // Non-capturing move
+        //Non-capturing move
         printf("Valid move for the Knight\n");
-        initial_board[curr_row - 1][curr_col - 'a'] = '.';  // Empty the current position
+        initial_board[curr_row - 1][curr_col - 'a'] = '.';  //Empty the current position
         initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'n' : 'N';  // Place the knight in the target position
     }
     } else {
     printf("Invalid move for the Knight\n");
-    // Handle the case where it's an invalid move
+    //Handle the case where it's an invalid move
 }
 }
 
@@ -600,10 +609,10 @@ bool Valid_Knight_Move (char curr_player, int curr_row, char curr_col, int targ_
 
 //THIS IS THE MOVE LOGIC FOR THE QUEEN
 bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]){
-       
     printf("Enter current Queen position:");
     scanf(" %c%d", &curr_col, &curr_row);
     if(curr_col < 'a'  ||  curr_col > 'h'  ||  curr_row < 1  || curr_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
@@ -611,6 +620,7 @@ bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_ro
     printf("Enter final Queen position:");
     scanf(" %c%d", &targ_col, &targ_row);
     if(targ_col < 'a'  ||  targ_col > 'h'  ||  targ_row < 1  || targ_row > 8){
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -625,9 +635,9 @@ bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_ro
     int row_diff = targ_row - curr_row;
     int col_diff = targ_col - curr_col;
 
-    // Check for a valid move(combination of bishop and rooks movement)
+    //Check for a valid move(combination of bishop and rooks movement)
     if (row_diff == 0 || col_diff == 0 || row_diff == col_diff || row_diff == -col_diff) {//either horizontal, vertical, or diagonal.
-        // Check for pieces in the way
+        //Check for pieces in the way
         int row_step, col_step;
 
         if (row_diff > 0) {
@@ -660,14 +670,14 @@ bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_ro
            if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
             // Capturing move
             printf("Capturing move for the Queen\n");
-            initial_board[curr_row - 1][curr_col - 'a'] = '.';  // Empty the current position
-            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'q' : 'Q';  // Place the queen in the target position
+            initial_board[curr_row - 1][curr_col - 'a'] = '.';  //Empty the current position
+            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'q' : 'Q';  //Place the queen in the target position
             return true;
         } else {
             // Non-capturing move
             printf("Valid move for the Queen\n");
-            initial_board[curr_row - 1][curr_col - 'a'] = '.';  // Empty the current position
-            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'q' : 'Q';  // Place the queen in the target position
+            initial_board[curr_row - 1][curr_col - 'a'] = '.';  //Empty the current position
+            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'q' : 'Q';  //Place the queen in the target position
             return true;
         }
     } else {
@@ -681,16 +691,16 @@ bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_ro
 bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8], bool is_castling) {
     printf("Enter current King position:");
     scanf(" %c%d", &curr_col, &curr_row);
-
     if (curr_col < 'a' || curr_col > 'h' || curr_row < 1 || curr_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid current position\n");
         return false;
     }
 
     printf("Enter final King position:");
     scanf(" %c%d", &targ_col, &targ_row);
-
     if (targ_col < 'a' || targ_col > 'h' || targ_row < 1 || targ_row > 8) {
+        //handling the condition if rows and columns are below '1' and 'a' and exceeding '8' and 'h'
         printf("Invalid final position\n");
         return false;
     }
@@ -703,13 +713,13 @@ bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row
     int row_diff = targ_row - curr_row;
     int col_diff = targ_col - curr_col;
 
-    // Check for a valid move (king can move one step in any direction)
+    //Check for a valid move (king can move one step in any direction)
     if (row_diff >= -1 && row_diff <= 1 && col_diff >= -1 && col_diff <= 1) {
         if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
             // Capturing move
             printf("Capturing move for the King\n");
-            initial_board[curr_row - 1][curr_col - 'a'] = '.';  // Empty the current position
-            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'k' : 'K';  // Place the king in the target position
+            initial_board[curr_row - 1][curr_col - 'a'] = '.';  //Empty the current position
+            initial_board[targ_row - 1][targ_col - 'a'] = (curr_player == 'W') ? 'k' : 'K';  //Place the king in the target position
             return true;
         } else {
             // Non-capturing move
@@ -720,19 +730,19 @@ bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row
         }
     }
 
-    // Check for castling
+    //Check for castling
     if (is_castling && curr_row == targ_row) {
         if (curr_col == 'e' && (targ_col == 'c' || targ_col == 'g')) {
-            // King-side or queen-side castling
+            //King-side or queen-side castling
             int rook_col = (targ_col == 'c') ? 'a' : 'h';
 
-            // Check if the rook is present
+            //Check if the rook is present
             if (initial_board[curr_row - 1][rook_col - 'a'] == 'r') {
-                // Check if the squares between king and rook are empty
+                //Check if the squares between king and rook are empty
                 if (initial_board[curr_row - 1][curr_col - 'a'] == '.' &&
                     initial_board[curr_row - 1][curr_col - 'a' + 1] == '.' &&
                     initial_board[curr_row - 1][curr_col - 'a' + 2] == '.') {
-                    // Move the king and rook for castling
+                    //Move the king and rook for castling
                     initial_board[curr_row - 1][curr_col - 'a'] = '.';
                     initial_board[curr_row - 1][targ_col - 'a'] = 'k';
 
@@ -745,7 +755,7 @@ bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row
             }
         }
     }
-    return false;  // Default case if none of the conditions are satisfied
+    return false;  //Default case if none of the conditions are satisfied
 }
 
 
