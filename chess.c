@@ -1274,7 +1274,6 @@ void handleCheckCondition(char curr_player, char initial_board[8][8], int* king_
                 } else {
                     // Checkmate, end the game
                     printf("Checkmate! Game over.\n");
-                    // You may want to add additional logic or end the game at this point
                 }
             }
         }
