@@ -7,9 +7,6 @@
 2. S Huzaifa Ali (23K-0004)
 3. Haris Ahmed (23K-6005)
 
-### Video Demo:
-
-
 
 ### Contributions:
 
@@ -39,5 +36,5 @@
 3. Handling check condition was clearly a difficult part in the entire game. To manage this we created different functions which analyzed whether king is in check, implemented 3 different functions containing the logic for separate ways to avoid being checked.
 4. Implementation in main function was by far the hardest and most challenging part in the entire code. To solve this we spent alot of time on the code.
 
-###Video for Chesscode:
+### Video for Chesscode:
 https://github.com/NUCES-Khi/pfproject-code-crafters/assets/143439820/e197fcea-2616-41de-9029-07b76694ce09
