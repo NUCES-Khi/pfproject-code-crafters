@@ -107,13 +107,13 @@ int main(){
                 scanf(" %c", &piece);
     
                 switch(piece){
-                    case 'P': //calling white pawn function when entering P
+                    case 'p': //calling white pawn function when entering P
                     if(Valid_White_Pawn_Move(curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
                     break;
 
-                    case 'p': //calling black pawn function when entering p
+                    case 'P': //calling black pawn function when entering p
                     if(Valid_Black_Pawn_Move( curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -121,6 +121,7 @@ int main(){
 
                     case 'N':
                     case 'n':
+                    //calling knight function when entering N or n
                     if(Valid_Knight_Move(curr_player, curr_row, curr_col, targ_row, targ_col, initial_board)){
                         display_initial_board(initial_board);
                     }
@@ -194,14 +195,14 @@ int main(){
 //THIS PART IS USED TO DESCRIBE THE INITIAL BOARD AT THE START OF THE GAME
 void initial_chess_board(char initial_board[8][8]) {
     char initial_data[8][8] = {
-        {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
-        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
         {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
-        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+        {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}
     };
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){//nested for loop for storing the chess board in a 2d array
@@ -308,9 +309,11 @@ bool Valid_White_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
         printf("Invalid move for the Pawn\n");
         return false;
     }
+
+    //Check for a valid move
     if((curr_row == 2  &&  curr_col == targ_col)  &&  (targ_row == curr_row + 2  ||  targ_row == curr_row + 1)){
         initial_board[curr_row - 1][curr_col - 'a'] = '.';
-        initial_board[targ_row - 1][targ_col - 'a'] = 'P';
+        initial_board[targ_row - 1][targ_col - 'a'] = 'p';
         printf("Valid move for the Pawn\n");
         return true;
     }
@@ -327,7 +330,7 @@ bool Valid_White_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
     if (target_piece != '.' && isupper(target_piece)) { //isupper is used to check for Uppercase (opposition team)
         // Valid capturing move
         initial_board[curr_row - 1][curr_col - 'a'] = '.';
-        initial_board[targ_row - 1][targ_col - 'a'] = 'p';
+        initial_board[targ_row - 1][targ_col - 'a'] = 'P';
         printf("Valid move for the Pawn (Capture)\n");
         return true;
     }
@@ -364,7 +367,7 @@ bool Valid_Black_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
     // Check for a valid move
     if ((curr_row == 7 && curr_col == targ_col) && (targ_row == curr_row - 2 || targ_row == curr_row - 1)) {
         initial_board[curr_row - 1][curr_col - 'a'] = '.';
-        initial_board[targ_row - 1][targ_col - 'a'] = 'p';
+        initial_board[targ_row - 1][targ_col - 'a'] = 'P';
         printf("Valid move for the Pawn\n");
         return true;
     }
@@ -381,7 +384,7 @@ bool Valid_Black_Pawn_Move(int curr_row, char curr_col, int targ_row, char targ_
         if (target_piece != '.' && islower(target_piece)) { // islower is used to check for lowercase (opposition team)
             // Valid capturing move
             initial_board[curr_row - 1][curr_col - 'a'] = '.';
-            initial_board[targ_row - 1][targ_col - 'a'] = 'P';
+            initial_board[targ_row - 1][targ_col - 'a'] = 'p';
             printf("Valid move for the Pawn (Capture)\n");
             return true;
         }
@@ -586,8 +589,8 @@ bool Valid_Knight_Move (char curr_player, int curr_row, char curr_col, int targ_
     int row_diff = targ_row - curr_row;
     int col_diff = targ_col - curr_col;
 
-    if ((row_diff == 1 && col_diff == 2) || (row_diff == -1 && col_diff == 2) ||
-    (row_diff == 2 && col_diff == 1) || (row_diff == -2 && col_diff == 1)) {
+    if ((row_diff == -2 && col_diff == -1)  ||  (row_diff == 2 && col_diff == -1)  ||  (row_diff == -2 && col_diff == 1)  ||  (row_diff == 2 && col_diff == 1)   ||   
+        (row_diff == -1 && col_diff == -2)  ||  (row_diff == 1 && col_diff == -2)  ||  (row_diff == -1 && col_diff == 2)  ||  (row_diff == 1 && col_diff == 2)) {
         if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
         //Capturing move
         printf("Capturing move for the Knight\n");
@@ -688,6 +691,7 @@ bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_ro
 
 
 
+//THIS IS THE MOVE LOGIC FOR THE KING
 bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8], bool is_castling) {
     printf("Enter current King position:");
     scanf(" %c%d", &curr_col, &curr_row);
@@ -715,6 +719,38 @@ bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row
 
     //Check for a valid move (king can move one step in any direction)
     if (row_diff >= -1 && row_diff <= 1 && col_diff >= -1 && col_diff <= 1) {
+
+        // Check for similar color pieces in the path
+        int row_step, col_step;
+        if (row_diff > 0) {
+            row_step = 1;
+        } else if (row_diff < 0) {
+            row_step = -1;
+        } else {
+            row_step = 0;
+        }
+
+        if (col_diff > 0) {
+            col_step = 1;
+        } else if (col_diff < 0) {
+            col_step = -1;
+        } else {
+            col_step = 0;
+        }
+
+    int row = curr_row + row_step;
+    int col = curr_col - 'a' + col_step;
+
+    while (row != targ_row || col != targ_col - 'a' + 1) {
+        if (initial_board[row - 1][col] != '.') {
+            // There is a piece in the path
+            printf("Invalid move due to the presence of similar color\n");
+            return false;
+        }
+
+        row += row_step;
+        col += col_step;
+    }
         if (initial_board[targ_row - 1][targ_col - 'a'] != '.') {
             // Capturing move
             printf("Capturing move for the King\n");
@@ -759,7 +795,7 @@ bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row
 }
 
 
-
+//THIS FUNCTION CONTAINS ALL THE LOGIC FOR CAPTURING
 bool Capture_Piece(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]){
     // Check if the target position is within bounds
     if (targ_row < 1 || targ_row > 8 || targ_col < 'a' || targ_col > 'h') {
@@ -825,10 +861,10 @@ bool Capture_Piece(char curr_player, int curr_row, char curr_col, int targ_row, 
 
         case 'p':
             if ((targ_row == curr_row - 1) && (targ_col == curr_col - 1 || targ_col == curr_col + 1)) {
-    // Check if there is an opponent's piece to capture
+            // Check if there is an opponent's piece to capture
                 char target_piece = initial_board[targ_row - 1][targ_col - 'a'];
                 if (target_piece != '.' && isupper(target_piece)) { //isupper is used to check for Uppercase (opposition team)
-        // Valid capturing move
+                // Valid capturing move
                     initial_board[curr_row - 1][curr_col - 'a'] = '.';
                     initial_board[targ_row - 1][targ_col - 'a'] = 'p';
                     printf("Valid move for the Pawn (Capture)\n");
@@ -842,10 +878,10 @@ bool Capture_Piece(char curr_player, int curr_row, char curr_col, int targ_row, 
 
         case 'P':
             if ((targ_row == curr_row + 1) && (targ_col == curr_col - 1 || targ_col == curr_col + 1)) {
-        // Check if there is an opponent's piece to capture
+            // Check if there is an opponent's piece to capture
                 char target_piece = initial_board[targ_row - 1][targ_col - 'a'];
                 if (target_piece != '.' && islower(target_piece)) { // islower is used to check for lowercase (opposition team)
-            // Valid capturing move
+                // Valid capturing move
                     initial_board[curr_row - 1][curr_col - 'a'] = '.';
                     initial_board[targ_row - 1][targ_col - 'a'] = 'P';
                     printf("Valid move for the Pawn (Capture)\n");
@@ -868,7 +904,7 @@ bool Capture_Piece(char curr_player, int curr_row, char curr_col, int targ_row, 
 
 
 
-//Pawn Promotion
+//THIS IS THE LOGIC FOR PAWN PROMOTION
 void handlePawnPromotion(char initial_board[8][8], int targ_row, char targ_col, char curr_player) {
     if ((curr_player == 'W' && targ_row == 8) || (curr_player == 'B' && targ_row == 1)) {
         printf("Pawn reached promotion rank! Choose a piece (Q, R, N, or B): ");
@@ -887,7 +923,7 @@ void handlePawnPromotion(char initial_board[8][8], int targ_row, char targ_col, 
 }
 
 
-
+//THIS IS THE LOGIC FOR ENPASSANT CAPTURE
 bool enPassantCapture(char initial_board[8][8], int curr_row, char curr_col, int targ_row, char targ_col, char curr_player) {
     // Check if the target square is a valid position
     if (targ_row < 1 || targ_row > 8 || targ_col < 'a' || targ_col > 'h') {
@@ -915,7 +951,7 @@ bool enPassantCapture(char initial_board[8][8], int curr_row, char curr_col, int
 }
 
 
-
+//THIS FUNCTIONS FINDS THE POSITION OF THE KING
 bool findKingPosition(char curr_player, char initial_board[8][8], int* king_row, int* king_col) {
     // Determine the piece representing the king based on the current player
     char king_piece = (curr_player == 'W') ? 'k' : 'K';
@@ -940,7 +976,7 @@ bool findKingPosition(char curr_player, char initial_board[8][8], int* king_row,
 }
 
 
-
+//THIS FUNCTION CHECKS WHETHER THE KING IS IN CHECK OR NOT
 bool isCheck(char curr_player, char initial_board[8][8]) {
     int king_row, king_col;
     bool is_castling;
@@ -1006,7 +1042,7 @@ bool isCheck(char curr_player, char initial_board[8][8]) {
 }
 
 
-
+//THIS FUNCTION CHECKS WHETHER THE PIECE GIVING THE CHECK CAN BE CAPTURED OR NOT
 bool canCaptureCheckingPiece(char curr_player, char initial_board[8][8], int king_row, char king_col) {
     bool is_castling;
     for (int row = 0; row < 8; ++row) {
@@ -1064,6 +1100,7 @@ bool canCaptureCheckingPiece(char curr_player, char initial_board[8][8], int kin
 
 
 
+//THIS FUNCTION CAPTURES THE PIECE GIVING THE CHECK
 void captureCheckingPiece(char capturing_piece, int capturing_piece_row, int capturing_piece_col,
                           int king_row, int king_col, char initial_board[8][8]) {
     // Empty the capturing piece's current position
@@ -1074,6 +1111,7 @@ void captureCheckingPiece(char capturing_piece, int capturing_piece_row, int cap
 
 
 
+//THIS FUNCTION CHECKS WHETHER THE KING CAN ESCAPE CHECK BY MOVING ITSELF
 bool canKingEscapeCheck(char curr_player, char initial_board[8][8], int king_row, int king_col) {
     bool is_castling;
     // Iterate through all possible positions the king can move to
@@ -1098,7 +1136,7 @@ bool canKingEscapeCheck(char curr_player, char initial_board[8][8], int king_row
 
 
 
-// Function to move the king to escape check
+//THIS FUNCTION MOVES THE KING TO ESCAPE CHECK
 void moveKingToEscapeCheck(char curr_player, int* king_row, char* king_col, char initial_board[8][8]) {
     bool is_castling;
     // Display available moves for the king
@@ -1160,6 +1198,7 @@ void movePiece(int start_row, char start_col, int end_row, char end_col, char bo
 
 
 
+//THIS FUNCTION IS USED TO CHECK IF ANOTHER PIECE CAN BLOCK THE CHECK
 bool canBlock(char initial_board[8][8], char blocking_piece, int blocking_row, char blocking_col, int king_row, char king_col){
     char curr_player;
     // Determine the direction from the blocking piece to the king
@@ -1225,6 +1264,7 @@ bool canBlock(char initial_board[8][8], char blocking_piece, int blocking_row, c
 
 
 
+//THIS FUNCTION EXECUTES THE MOVEMENT OF ANOTHER PIECE TO BLOCK CHECK
 void blockMove(char blocking_piece, int blocking_row, char blocking_col, int king_row, char king_col, char initial_board[8][8]) {
     // Determine the direction from the blocking piece to the king
     int row_direction = (king_row > blocking_row) ? 1 : -1;
@@ -1247,38 +1287,39 @@ void blockMove(char blocking_piece, int blocking_row, char blocking_col, int kin
 
 
 
+//THIS FUNCTION CALLS ALL THE FUNCTIONS AND HANDLES OVERALL CHECK CONDITION
 void handleCheckCondition(char curr_player, char initial_board[8][8], int* king_row, char* king_col) {
-    // Check if the king is in check
+    //Check if the king is in check
     if (isCheck(curr_player, initial_board)) {
         printf("King is in check!\n");
 
-        // Check if the king can escape check
+        //Check if the king can escape check
         if (canKingEscapeCheck(curr_player, initial_board, *king_row, *king_col)) {
             moveKingToEscapeCheck(curr_player, king_row, king_col, initial_board);
         } else {
-            // Check if any piece can capture the checking piece
+            //Check if any piece can capture the checking piece
             if (canCaptureCheckingPiece(curr_player, initial_board, *king_row, *king_col)) {
-                // Identify the capturing piece's location (you need to implement this logic)
+                //Identify the capturing piece's location (you need to implement this logic)
                 int capturing_piece_row, capturing_piece_col;
-                // Assuming you have the capturing piece's location, capture the checking piece
+                //Assuming you have the capturing piece's location, capture the checking piece
                 captureCheckingPiece(initial_board[capturing_piece_row - 1][capturing_piece_col - 'a'], capturing_piece_row, capturing_piece_col, *king_row, *king_col, initial_board);
                 printf("Capturing the attacking piece!\n");
             } else {
-                // Check if any piece can block the check
+                //Check if any piece can block the check
                  int blocking_piece_row, blocking_piece_col,blocking_piece, blocking_row, blocking_col;
                 if (canBlock(initial_board, blocking_piece, blocking_row, blocking_col, *king_row, *king_col)) {
-                    // Identify the blocking piece's location (you need to implement this logic)
-                   // Assuming you have the blocking piece's location, block the check
+                    //Identify the blocking piece's location (you need to implement this logic)
+                   //Assuming you have the blocking piece's location, block the check
                    blockMove(blocking_piece, blocking_row, blocking_col, *king_row, *king_col, initial_board);
                     printf("Blocking the check!\n");
                 } else {
-                    // Checkmate, end the game
+                    //Checkmate, end the game
                     printf("Checkmate! Game over.\n");
                 }
             }
         }
     } else {
         printf("No check. Continue the game.\n");
-        // Continue with the normal game logic
+        //Continue with the normal game logic
     }
 }
