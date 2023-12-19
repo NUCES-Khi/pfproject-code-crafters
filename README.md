@@ -8,10 +8,6 @@
 3. Haris Ahmed (23K-6005)
 
 
-###Video Demo:
-
-
-
 ###Contributions:
 
 - S Huzaifa Ali
