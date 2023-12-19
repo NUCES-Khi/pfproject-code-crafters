@@ -40,4 +40,4 @@
 4. Implementation in main function was by far the hardest and most challenging part in the entire code. To solve this we spent alot of time on the code.
 
 ###Video for Chesscode:
-
+https://github.com/NUCES-Khi/pfproject-code-crafters/assets/143439820/e197fcea-2616-41de-9029-07b76694ce09
