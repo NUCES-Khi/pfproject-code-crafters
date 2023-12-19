@@ -39,4 +39,5 @@
 3. Handling check condition was clearly a difficult part in the entire game. To manage this we created different functions which analyzed whether king is in check, implemented 3 different functions containing the logic for separate ways to avoid being checked.
 4. Implementation in main function was by far the hardest and most challenging part in the entire code. To solve this we spent alot of time on the code.
 
+###Video for Chesscode:
 
