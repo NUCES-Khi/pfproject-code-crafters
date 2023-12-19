@@ -19,7 +19,6 @@ bool Valid_Knight_Move(char curr_player, int curr_row, char curr_col, int targ_r
 bool Valid_Queen_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 bool Valid_King_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8], bool is_castling);
 bool enPassantCapture(char initial_board[8][8], int curr_row, char curr_col, int targ_row, char targ_col, char curr_player);
-bool Valid_Pawn_Capture_Move(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8]);
 //bool Capture_Piece(char curr_player, int curr_row, char curr_col, int targ_row, char targ_col, char initial_board[8][8])
 void handlePawnPromotion(char initial_board[8][8], int targ_row, char targ_col, char curr_player);
 bool findKingPosition(char curr_player, char initial_board[8][8], int* king_row, int* king_col);
